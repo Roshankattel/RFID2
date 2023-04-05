@@ -52,13 +52,14 @@ def get_transactions(id:int):
                             detail=f"user with id:{id} was not found")
     return user.transactions
 
-@router.get("/users/{id}", response_model=schemas.TransactionUserResponse)
+@router.get("/users/{id}", response_model=schemas.UserResponse)
 def get_user(id: int):
    transaction = SessionLocal.query(models.Transaction).filter(models.Transaction.id == id).first()
+   print
    if not transaction:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"user with id:{id} was not found")
-   return transaction
+   return transaction.user
 
 @router.get("/users/merchats/{id}", response_model=List[schemas.MerchantResponse])
 def get_user_merchant(id:int):
